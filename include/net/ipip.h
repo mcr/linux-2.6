@@ -23,12 +23,17 @@ struct ip_tunnel {
 	unsigned long		err_time;	/* Time when the last ICMP error arrived */
 
 	/* These four fields used only by GRE */
-	__u32			i_seqno;	/* The last seen seqno	*/
-	__u32			o_seqno;	/* The last output seqno */
-	int			hlen;		/* Precalculated GRE header length */
-	int			mlink;
 
-	struct ip_tunnel_parm	parms;
+        union {
+                struct ip_tunnel_parm	ip_parms;
+                struct {
+                        struct gre_tunnel_parm  gre_parms;
+                        __u32			i_seqno;  /* The last seen seqno */
+                        __u32			o_seqno;  /* The last output seqno */
+                        int			hlen;	  /* Precalculated GRE header length */
+                        int			mlink;
+                } gre;
+        } gen_parms;
 
 	/* for SIT */
 #ifdef CONFIG_IPV6_SIT_6RD

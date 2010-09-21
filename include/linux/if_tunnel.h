@@ -31,14 +31,30 @@
 #define GRE_FLAGS	__cpu_to_be16(0x00F8)
 #define GRE_VERSION	__cpu_to_be16(0x0007)
 
+/* this structure used in ioctl */
 struct ip_tunnel_parm {
 	char			name[IFNAMSIZ];
 	int			link;
 	__be16			i_flags;
 	__be16			o_flags;
-	__be32			i_key;
+        __be32			i_key;
 	__be32			o_key;
-	struct iphdr		iph;
+        struct iphdr		iph;
+};
+
+struct gre_tunnel_parm {
+        unsigned int            gre_proto;  /* AF_INET or AF_INET6 */
+	char			name[IFNAMSIZ];
+	int			link;
+	__be16			i_flags;
+	__be16			o_flags;
+        __be32			i_key;
+	__be32			o_key;
+        struct in6_addr         loc6, rem6; /* used as key for v4 and v6 */
+        union {
+                struct iphdr		iph;
+                struct ipv6hdr          ip6;
+        } outer;
 };
 
 /* SIT-mode i_flags */
