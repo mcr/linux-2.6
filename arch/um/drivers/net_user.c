@@ -122,6 +122,21 @@ int net_recvfrom(int fd, void *buf, int len)
 	return n;
 }
 
+int net_recvfrom2(int fd, void *buf, int len, struct sockaddr *in, int *inlen)
+{
+	int n;
+
+	CATCH_EINTR(n = recvfrom(fd,  buf,  len, 0, in, inlen));
+	if (n < 0) {
+		if (errno == EAGAIN)
+			return 0;
+		return -errno;
+	}
+	else if (n == 0)
+		return -ENOTCONN;
+	return n;
+}
+
 int net_write(int fd, void *buf, int len)
 {
 	int n;

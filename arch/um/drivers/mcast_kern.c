@@ -41,8 +41,9 @@ static void mcast_init(struct net_device *dev, void *data)
 
 static int mcast_read(int fd, struct sk_buff *skb, struct uml_net_private *lp)
 {
-	return net_recvfrom(fd, skb_mac_header(skb),
-			    skb->dev->mtu + ETH_HEADER_OTHER);
+        return mcast_user_read(fd, skb_mac_header(skb),
+                               skb->dev->mtu + ETH_HEADER_OTHER,
+                               (struct mcast_data *) &lp->user);
 }
 
 static int mcast_write(int fd, struct sk_buff *skb, struct uml_net_private *lp)

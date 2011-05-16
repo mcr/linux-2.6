@@ -39,6 +39,7 @@ extern void read_output(int fd, char *output_out, int len);
 
 extern int net_read(int fd, void *buf, int len);
 extern int net_recvfrom(int fd, void *buf, int len);
+extern int net_recvfrom2(int fd, void *buf, int len, struct sockaddr *in, int *inlen);
 extern int net_write(int fd, void *buf, int len);
 extern int net_send(int fd, void *buf, int len);
 extern int net_sendto(int fd, void *buf, int len, void *to, int sock_len);

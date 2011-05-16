@@ -14,6 +14,8 @@ struct mcast_data {
 	void *mcast_addr;
 	int ttl;
 	void *dev;
+        int send_fd;
+        void *sender_addr;
 };
 
 extern const struct net_user_info mcast_user_info;
@@ -21,4 +23,5 @@ extern const struct net_user_info mcast_user_info;
 extern int mcast_user_write(int fd, void *buf, int len, 
 			    struct mcast_data *pri);
 
+extern int mcast_user_read(int fd, void *buf, int len, struct mcast_data *pri);
 #endif
